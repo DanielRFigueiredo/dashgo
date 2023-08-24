@@ -7,7 +7,7 @@ interface PaginationProps {
 export function Pagination(props: PaginationProps) {
   return (
     <Stack
-      direction='row'
+      direction={['column','row']}
       mt='8'
       justify='space-between'
       align='center'
