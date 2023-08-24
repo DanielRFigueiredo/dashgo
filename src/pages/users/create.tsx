@@ -19,21 +19,17 @@ export default function CreateUser(props: UserListProps) {
             <SimpleGrid minChildWidth='240px' spacing='8' w='100%'>
               <InputForm name='name' type="text" label="Nome Completo" />
               <InputForm name='email' type="email" label="E-mail" />
-
             </SimpleGrid>
             <SimpleGrid minChildWidth='240px' spacing='8' w='100%'>
               <InputForm name='password' type="password" label="Senha" />
               <InputForm name='password_confirmation' type="password" label="Confirmação da senha" />
-
             </SimpleGrid>
           </VStack>
           <Flex mt='8' justify='flex-end'>
             <HStack spacing='4'>
               <Button colorScheme="whiteAlpha">Cancelar</Button>
               <Button colorScheme="pink">Salvar</Button>
-
             </HStack>
-
           </Flex>
         </Box>
       </Flex>
