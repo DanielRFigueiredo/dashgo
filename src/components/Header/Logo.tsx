@@ -5,7 +5,7 @@ interface LogoProps {
 export function Logo(props: LogoProps) {
   return (
     <Text
-      fontSize='3xl'
+      fontSize={["2xl", "3xl"]}
       fontWeight='bold'
       letterSpacing='tight'
       w='64'
