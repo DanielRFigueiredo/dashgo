@@ -69,26 +69,25 @@ export default function DashBoard(props: DashBoardProps) {
         <Sidebar />
         <SimpleGrid flex='1' gap='4' minChildWidth='320px' alignItems='flex-start'>
           <Box
-            p={["6","8"]}
+            p={["6", "8"]}
             bg='gray.800'
             borderRadius={8}
             pb='4'
+            overflow={'hidden'}
           >
             <Text fontSize='lg' mb='4'>Inscritos da semana</Text>
             <Chart options={options} series={options.series} type="area" height={160} />
           </Box>
           <Box
-            p={["6","8"]}
+            p={["6", "8"]}
             bg='gray.800'
             borderRadius={8}
             pb='4'
-
+            overflow={'hidden'}
           >
             <Text fontSize='lg' mb='4'>Taxa de abertura</Text>
             <Chart options={options} series={options.series} type="area" height={160} />
           </Box>
-
-
         </SimpleGrid>
       </Flex>
 

@@ -2,12 +2,15 @@ import { Header } from "@/components/Header";
 import { Pagination } from "@/components/Pagination";
 import { Sidebar } from "@/components/Sidebar";
 import { Box, Button, Checkbox, Flex, Heading, Icon, Table, Tbody, Td, Th, Thead, Tr, Text, useBreakpointValue } from "@chakra-ui/react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 
 interface UserListProps {
 
 }
 export default function UserList(props: UserListProps) {
+  const { asPath } = useRouter()
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true
@@ -20,14 +23,15 @@ export default function UserList(props: UserListProps) {
         <Box flex='1' borderRadius={8} bg="gray.800" p='8'>
           <Flex mb='8' justify='space-between' align='center'>
             <Heading size='lg' fontWeight='normal'>Usuários</Heading>
-            <Button
-              as='a'
-              size='sm'
-              colorScheme="pink"
-              leftIcon={<Icon as={RiAddLine} fontSize='20' />}
-            >
-              Criar novo
-            </Button>
+            <Link href={`${asPath}/create`}>
+              <Button
+                size='sm'
+                colorScheme="pink"
+                leftIcon={<Icon as={RiAddLine} fontSize='20' />}
+              >
+                Criar novo
+              </Button>
+            </Link>
           </Flex>
 
           <Table colorScheme="whiteAlpha">
