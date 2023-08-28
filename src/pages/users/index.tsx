@@ -4,6 +4,7 @@ import { Sidebar } from "@/components/Sidebar";
 import { Box, Button, Checkbox, Flex, Heading, Icon, Table, Tbody, Td, Th, Thead, Tr, Text, useBreakpointValue } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 
 interface UserListProps {
@@ -15,6 +16,14 @@ export default function UserList(props: UserListProps) {
     base: false,
     lg: true
   })
+
+  useEffect(() => {
+    fetch('https://localhost:3000/api/users')
+      .then(resp => resp.json())
+      .then(resp => console.log(resp))
+  }, [])
+
+
   return (
     <Box>
       <Header />
