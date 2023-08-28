@@ -1,7 +1,26 @@
 import { InputForm } from '@/components/Form/InputForm'
-import { Flex, Button, Stack } from '@chakra-ui/react'
+import { Stack, Flex, Button } from "@chakra-ui/react"
+import { useForm, SubmitHandler } from 'react-hook-form'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+
+type Inputs = {
+  email: string,
+  senha: string,
+};
+
+const singInFormSchema = yup.object({
+  email: yup.string().required('email obrigatorio').email('formato de email invalido'),
+  senha: yup.string().required('senha obrigatorio')
+})
 
 export default function SingIn() {
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<Inputs>({ resolver: yupResolver(singInFormSchema) })
+
+  const handleSignIn: SubmitHandler<Inputs> = async (data) => {
+    await new Promise(resolve => setTimeout(resolve, 2000))
+    console.log(data)
+  }
 
   return (
     <Flex
@@ -10,6 +29,8 @@ export default function SingIn() {
       justifyContent={'center'}
       alignItems={'center'}
     >
+
+
       <Flex
         as='form'
         width='100%'
@@ -18,10 +39,14 @@ export default function SingIn() {
         p='8'
         borderRadius={8}
         direction={'column'}
+        onSubmit={handleSubmit(handleSignIn)}
+
       >
         <Stack spacing='4'>
-          <InputForm name='email' label='E-mail' type='email' />
-          <InputForm name='password' label='Senha' type='password' />
+
+          <InputForm label='E-mail' type='email' error={errors.email}  {...register('email')} />
+
+          <InputForm label='Senha' type='password' error={errors.senha}  {...register('senha', { required: 'Senha Obrigatorio' })} />
 
         </Stack>
         <Button
@@ -29,6 +54,7 @@ export default function SingIn() {
           mt='6'
           colorScheme='pink'
           size='lg'
+          isLoading={isSubmitting}
         >Entrar</Button>
       </Flex>
 
