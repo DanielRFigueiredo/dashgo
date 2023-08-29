@@ -5,6 +5,7 @@ import { useUsers } from "@/services/hooks/useUsers";
 import { Box, Button, Checkbox, Flex, Heading, Icon, Table, Tbody, Td, Th, Thead, Tr, Text, useBreakpointValue, Spinner } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 
 
@@ -12,8 +13,9 @@ interface UserListProps {
 
 }
 export default function UserList(props: UserListProps) {
-  const { data, isLoading, isFetching, error } = useUsers()
-
+  const [page, setPage] = useState(1)
+  const { data, isLoading, isFetching, error } = useUsers(page)
+  console.log(data)
   const { asPath } = useRouter()
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -54,7 +56,7 @@ export default function UserList(props: UserListProps) {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {!!data && data?.map(user => (
+                    {!!data && data?.users.map(user => (
                       <Tr key={user.id}>
                         <Td px={['4', '4', '6']}>
                           <Checkbox colorScheme="pink" />
@@ -84,7 +86,7 @@ export default function UserList(props: UserListProps) {
                   </Tbody>
 
                 </Table >
-                <Pagination totalCountOfRegisters={200} currentPage={5} onPageChange={() => { }} />
+                <Pagination totalCountOfRegisters={!!data?.totalCount ? data?.totalCount : 0} currentPage={page} onPageChange={setPage} />
               </>)
           }
 

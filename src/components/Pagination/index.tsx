@@ -1,5 +1,5 @@
-import { Box, Button, Stack, Text } from "@chakra-ui/react";
-import { PaginationIcon } from "./PaginationIcon";
+import { Box, Stack, Text } from "@chakra-ui/react";
+import { PaginationItem } from "./PaginationItem";
 
 interface PaginationProps {
   totalCountOfRegisters: number;
@@ -47,23 +47,23 @@ export function Pagination({
       <Stack spacing='2' direction='row'>
         {currentPage > (1 + siblingsCount) && (
           <>
-            <PaginationIcon page={'1'} />
+            <PaginationItem onPageChange={onPageChange} page={1}  />
             {currentPage > (2 + siblingsCount) && (<Text color='gray.300' width='8' textAlign='center' >...</Text>)}
           </>
         )}
 
         {previousPages.length > 0 && previousPages.map(page => {
-          return <PaginationIcon page={String(page)} key={page} />
+          return <PaginationItem onPageChange={onPageChange} page={page} key={page} />
         })}
-        <PaginationIcon page={String(currentPage)} active />
+        <PaginationItem onPageChange={onPageChange} page={currentPage} active />
         {nextPages.length > 0 && nextPages.map(page => {
-          return <PaginationIcon page={String(page)} key={page} />
+          return <PaginationItem onPageChange={onPageChange} page={page} key={page} />
         })}
 
         {(currentPage + siblingsCount) < lastPage && (
           <>
             {(currentPage + 1 + siblingsCount) < lastPage && (<Text color='gray.300' width='8' textAlign='center'>...</Text>)}
-            <PaginationIcon page={String(lastPage)} />
+            <PaginationItem onPageChange={onPageChange} page={lastPage} />
 
           </>
         )}

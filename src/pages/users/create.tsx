@@ -31,7 +31,7 @@ export default function CreateUser() {
 
   const envio: SubmitHandler<InputsData> = async (data) => {
     await new Promise(resolve => setTimeout(resolve, 2000))
-    console.log(data)
+   
   }
 
   return (
