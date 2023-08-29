@@ -16,8 +16,8 @@ interface UserListProps {
 }
 export default function UserList(props: UserListProps) {
   const [page, setPage] = useState(1)
-  const { data, isLoading, isFetching, error } = useUsers(page)
-  console.log(data)
+  const { data, isLoading, isFetching, error, isError } = useUsers(page)
+
   const { asPath } = useRouter()
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -80,7 +80,7 @@ export default function UserList(props: UserListProps) {
                             <Text fontSize='small' color='gray.300'>{user.email}</Text>
                           </Box>
                         </Td>
-                        {isWideVersion && <Td>{user.createdAT}</Td>}
+                        {isWideVersion && <Td>{user.createdAt}</Td>}
                         {isWideVersion && (
                           <Td>
                             <Button
