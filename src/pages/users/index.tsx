@@ -14,7 +14,6 @@ interface UserListProps {
 export default function UserList(props: UserListProps) {
   const { data, isLoading, isFetching, error } = useUsers()
 
-
   const { asPath } = useRouter()
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -55,7 +54,7 @@ export default function UserList(props: UserListProps) {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {data?.users.map(user => (
+                    {!!data && data?.map(user => (
                       <Tr key={user.id}>
                         <Td px={['4', '4', '6']}>
                           <Checkbox colorScheme="pink" />
@@ -85,7 +84,7 @@ export default function UserList(props: UserListProps) {
                   </Tbody>
 
                 </Table >
-                <Pagination />
+                <Pagination totalCountOfRegisters={200} currentPage={5} onPageChange={() => { }} />
               </>)
           }
 

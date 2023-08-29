@@ -9,24 +9,31 @@ type User = {
 }
 
 type Data = {
-  data: {
-    users: User[];
-  }
+  data: User[];
+
 }
 
+function formatDate(date: string) {
+  return new Intl.DateTimeFormat('pt-br', { minute: '2-digit', hour: '2-digit', day: "2-digit", month: "long", year: 'numeric' }).format(new Date(date))
+}
+
+async function getUsers() {
+  const { data }: Data = await api.get('/users')
+  console.log(data)
+  const newData: User[] = data.map(user => {
+    user.createdAT = formatDate(user.createdAT)
+    return user
+  })
+
+  return newData
+}
+
+
+
 export function useUsers() {
-  return useQuery('users', async () => {
-    const data: Data = await api.get('/users')
-    const newData = data.data.users.map(user => {
-      user.createdAT = formatDate(user.createdAT)
-      return user
-    })
-    return { ...data, users: newData }
-  }, {
+  return useQuery('users', getUsers, {
     staleTime: 1000 * 5, //5 segundos
   })
 
-  function formatDate(date: string) {
-    return new Intl.DateTimeFormat('pt-br', { minute: '2-digit', hour: '2-digit', day: "2-digit", month: "long", year: 'numeric' }).format(new Date(date))
-  }
+
 }
