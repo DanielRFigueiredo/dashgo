@@ -1,7 +1,9 @@
 import { Header } from "@/components/Header";
 import { Pagination } from "@/components/Pagination";
 import { Sidebar } from "@/components/Sidebar";
+import { api } from "@/services/api";
 import { useUsers } from "@/services/hooks/useUsers";
+import { queryClient } from "@/services/queryClient";
 import { Box, Button, Checkbox, Flex, Heading, Icon, Table, Tbody, Td, Th, Thead, Tr, Text, useBreakpointValue, Spinner } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -21,6 +23,15 @@ export default function UserList(props: UserListProps) {
     base: false,
     lg: true
   })
+
+  async function handlePrefetch(id: number) {
+    await queryClient.prefetchQuery(['user', id], async () => {
+      const resp = await api.get(`users/${id}`)
+      return resp.data
+    }, {
+      staleTime: 1000 * 60 * 60 //60 minutes
+    })
+  }
 
   return (
     <Box>
@@ -63,7 +74,9 @@ export default function UserList(props: UserListProps) {
                         </Td>
                         <Td>
                           <Box>
-                            <Text fontWeight='bold'>{user.name}</Text>
+                            <Link href='#'>
+                              <Text fontWeight='bold' _hover={{ color: 'blue.400' }} onMouseEnter={() => handlePrefetch(Number(user.id))}>{user.name}</Text>
+                            </Link>
                             <Text fontSize='small' color='gray.300'>{user.email}</Text>
                           </Box>
                         </Td>

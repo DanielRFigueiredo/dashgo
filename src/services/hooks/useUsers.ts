@@ -19,7 +19,7 @@ function formatDate(date: string) {
   return new Intl.DateTimeFormat('pt-br', { minute: '2-digit', hour: '2-digit', day: "2-digit", month: "long", year: 'numeric' }).format(new Date(date))
 }
 
-async function getUsers(page: number) {
+export async function getUsers(page: number) {
   const { data, headers }: Data = await api.get('/users', { params: { page } })
 
   const newData: User[] = data.map(user => {
@@ -33,8 +33,8 @@ async function getUsers(page: number) {
 
 
 export function useUsers(page: number) {
-  return useQuery(['users',page], () => getUsers(page), {
-    staleTime: 1000 * 5, //5 segundos
+  return useQuery(['users', page], () => getUsers(page), {
+    staleTime: 1000 * 60 * 10, //10 minutes
   })
 
 
